@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 228 100% 2%;
+    --foreground: 220 20% 90%;
+    --card: 228 60% 4%;
+    --card-foreground: 220 20% 90%;
+    --popover: 228 60% 4%;
+    --popover-foreground: 220 20% 90%;
+    --primary: 232 100% 32%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 228 40% 8%;
+    --secondary-foreground: 220 20% 85%;
+    --muted: 228 30% 10%;
+    --muted-foreground: 220 15% 55%;
+    --accent: 261 100% 62%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 228 30% 12%;
+    --input: 228 30% 12%;
+    --ring: 261 100% 62%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Star animation */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0); opacity: 0.6; }
+  100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 40px rgba(122, 60, 255, 0.3), 0 0 80px rgba(0, 30, 163, 0.2);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 60px rgba(122, 60, 255, 0.5), 0 0 120px rgba(0, 30, 163, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes aurora {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-twinkle {
+  animation: twinkle var(--twinkle-duration, 3s) ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+}
+
+.animate-float-up {
+  animation: float-up var(--float-duration, 8s) linear infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+.animate-aurora {
+  background-size: 200% 200%;
+  animation: aurora 8s ease-in-out infinite;
+}
+
+/* Glass card effect */
+.glass-card {
+  background: linear-gradient(135deg, rgba(0, 30, 163, 0.08) 0%, rgba(122, 60, 255, 0.06) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-card:hover {
+  border-color: rgba(122, 60, 255, 0.3);
+  background: linear-gradient(135deg, rgba(0, 30, 163, 0.12) 0%, rgba(122, 60, 255, 0.1) 100%);
+}
