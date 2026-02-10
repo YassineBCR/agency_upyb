@@ -1,30 +1,31 @@
 "use client";
 import { motion } from "framer-motion";
-import { Code, Cpu, Layers, Rocket } from "lucide-react";
+// J'ai importé des icônes plus pertinentes pour vos nouveaux services
+import { Monitor, ShoppingBag, MapPin, Megaphone } from "lucide-react";
 
 const services = [
   {
-    title: "SaaS Development",
-    description: "Architecture robuste et scalable pour des applications web critiques. Next.js, React, Node.",
-    icon: Code,
+    title: "Sites Web & Webapps",
+    description: "Des vitrines digitales modernes et des applications sur-mesure pour asseoir votre crédibilité instantanément.",
+    icon: Monitor, // Icône écran
     gradient: "from-blue-500 to-cyan-500",
   },
   {
-    title: "Design 3D Immersif",
-    description: "Expériences WebGL et Three.js qui captivent vos utilisateurs et augmentent la conversion.",
-    icon: Layers,
+    title: "E-Commerce",
+    description: "Création de boutiques en ligne performantes (Shopify, WooCommerce) conçues pour convertir vos visiteurs en clients.",
+    icon: ShoppingBag, // Icône sac de course
     gradient: "from-purple-500 to-pink-500",
   },
   {
-    title: "Stratégie Produit",
-    description: "De l'idée au MVP. Nous transformons votre vision en une roadmap claire et efficace.",
-    icon: Rocket,
+    title: "Google & Présence",
+    description: "Optimisation de votre fiche Google Business et SEO local. Soyez le premier choix quand on vous cherche.",
+    icon: MapPin, // Icône localisation
     gradient: "from-orange-500 to-red-500",
   },
   {
-    title: "Intelligence Artificielle",
-    description: "Intégration de LLM et d'agents IA pour automatiser et enrichir vos interfaces.",
-    icon: Cpu,
+    title: "Com & Marketing",
+    description: "Gestion de vos réseaux sociaux et campagnes publicitaires pour étendre votre influence et votre communauté.",
+    icon: Megaphone, // Icône mégaphone
     gradient: "from-emerald-500 to-teal-500",
   },
 ];
@@ -40,10 +41,10 @@ export function Services() {
           className="mb-16 text-center md:text-left"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-            Notre Expertise
+            Notre Mission
           </h2>
           <p className="text-gray-400 max-w-xl text-lg">
-            Nous fusionnons design futuriste et ingénierie de pointe.
+            Une approche 360° pour dominer votre marché digital.
           </p>
         </motion.div>
 
@@ -55,7 +56,8 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group relative p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors overflow-hidden h-full"
+              // Style vitré sombre pour une meilleure lisibilité
+              className="group relative p-8 rounded-3xl bg-black/50 backdrop-blur-md border border-white/10 hover:border-white/20 transition-colors overflow-hidden h-full"
             >
               {/* Glow Effect on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500 blur-xl`} />
