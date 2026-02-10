@@ -1,11 +1,10 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Check, Rocket, Monitor, ShoppingBag, Megaphone, Search } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Rocket, Monitor, ShoppingBag, Megaphone, Search, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Meteors } from "@/components/meteors";
 
-// --- CONFIGURATION DES ÉTAPES ---
 const steps = [
   { id: 1, title: "Votre Besoin" },
   { id: 2, title: "Budget" },
@@ -16,8 +15,8 @@ const steps = [
 export default function StartPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
-  // État pour stocker les réponses
   const [formData, setFormData] = useState({
     service: "",
     budget: "",
@@ -36,15 +35,34 @@ export default function StartPage() {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  const handleSubmit = () => {
-    // ICI : C'est là que vous enverrez les données à votre API/Email plus tard
-    console.log("Formulaire envoyé :", formData);
-    setIsSubmitted(true);
-  };
-
-  // Mise à jour des champs
   const updateField = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
+  };
+
+  // --- FONCTION D'ENVOI ---
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            setIsSubmitted(true);
+        } else {
+            console.error(result);
+            alert("Erreur lors de l'envoi. Vérifiez la console.");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Erreur de connexion au serveur.");
+    } finally {
+        setIsLoading(false);
+    }
   };
 
   return (
@@ -86,7 +104,7 @@ export default function StartPage() {
             <h2 className="text-3xl font-bold mb-4">Mission Reçue !</h2>
             <p className="text-gray-300 mb-8 text-lg">
                 Merci {formData.name}. Nos équipes analysent votre demande.<br/>
-                Nous vous recontacterons sous 24h pour organiser le décollage.
+                Nous vous recontacterons sous 24h sur {formData.email}.
             </p>
             <Link href="/" className="px-8 py-3 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-colors">
                 Retour à la base
@@ -236,7 +254,7 @@ export default function StartPage() {
              <div className="flex justify-between mt-8 pt-6 border-t border-white/10">
                 <button 
                     onClick={handlePrev}
-                    disabled={currentStep === 1}
+                    disabled={currentStep === 1 || isLoading}
                     className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-colors ${currentStep === 1 ? "opacity-0 pointer-events-none" : "hover:bg-white/10"}`}
                 >
                     <ArrowLeft size={18} /> Précédent
@@ -244,15 +262,22 @@ export default function StartPage() {
 
                 <button 
                     onClick={handleNext}
-                    // Désactive si champs vides (validation simple)
                     disabled={
+                        isLoading ||
                         (currentStep === 1 && !formData.service) ||
                         (currentStep === 2 && !formData.budget) ||
                         (currentStep === 4 && (!formData.name || !formData.email))
                     }
-                    className="flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-bold hover:bg-upyb-purple hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-8 py-3 rounded-full bg-white text-black font-bold hover:bg-upyb-purple hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed min-w-[140px] justify-center"
                 >
-                    {currentStep === steps.length ? "Envoyer" : "Suivant"} <ArrowRight size={18} />
+                    {isLoading ? (
+                        <Loader2 className="animate-spin" size={20} />
+                    ) : (
+                        <>
+                           {currentStep === steps.length ? "Envoyer" : "Suivant"} 
+                           {currentStep !== steps.length && <ArrowRight size={18} />}
+                        </>
+                    )}
                 </button>
              </div>
 
