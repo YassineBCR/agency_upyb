@@ -69,7 +69,7 @@ export function Hero3D() {
             transition={{ delay: 0.7 }}
             className="font-sans text-upyb-light text-lg md:text-2xl tracking-wide font-light opacity-90 max-w-2xl mx-auto"
           >
-            Nous propulsons votre <span className="text-upyb-purple font-semibold">Visibilité</span> et votre <span className="text-upyb-blue font-semibold">Empreinte Numérique</span>.
+            Nous propulsons votre Visibilité et votre Empreinte Numérique.
           </motion.p>
           
           {/* CTA Démarrer la Collaboration */}
