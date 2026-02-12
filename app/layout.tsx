@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Hind_Madurai } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll"; // On importe le composant créé
+import SmoothScroll from "@/components/SmoothScroll"; // Assure-toi d'avoir créé ce fichier comme vu juste avant
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -15,38 +15,48 @@ const hind = Hind_Madurai({
   weight: ["400", "500", "600"],
 });
 
-// C'est ici que l'on gère le SEO et l'affichage sur les réseaux
+// Configuration SEO & Réseaux Sociaux (Basée sur tes balises OpenGraph)
 export const metadata: Metadata = {
+  // L'URL de base est indispensable pour que l'image s'affiche partout
   metadataBase: new URL('https://www.upyb.fr'),
+
   title: {
-    default: "UPYB - AGENCY",
+    default: "UPYB - Agence Digitale de Croissance",
     template: "%s | UPYB"
   },
-  description: "Nous propulsons votre Visibilité et votre Empreinte Numérique. Design Futuriste, Stratégie Marketing & Technologie de Pointe.",
-  
-  // Icône dans l'onglet du navigateur
-  icons: {
-    icon: "/logo-upyb.png",
-    shortcut: "/logo-upyb.png",
-    apple: "/logo-upyb.png",
-  },
+  description: "Nous ne sommes pas des simples développeurs. Nous sommes des accélérateurs. Découvrez notre approche 360°.",
 
-  // Affichage lors du partage du lien (WhatsApp, LinkedIn, iMessage...)
+  // Open Graph (Facebook, LinkedIn, WhatsApp, iMessage...)
   openGraph: {
     title: "UPYB - Agence Digitale de Croissance",
     description: "Nous ne sommes pas des simples développeurs. Nous sommes des accélérateurs. Découvrez notre approche 360°.",
-    url: "https://www.upyb.fr",
-    siteName: "UPYB Agency",
+    url: "https://www.upyb.fr/",
+    siteName: "UPYB",
     locale: "fr_FR",
     type: "website",
     images: [
       {
-        url: "/opengraph-image.png", // Idéalement, remplace par une image 'opengraph-image.png' format 1200x630
+        url: "/opengraph-image.png", // Next.js ira chercher l'image dans le dossier public
         width: 1200,
         height: 630,
-        alt: "UPYB Agence Digitale",
+        alt: "UPYB - Agence Digitale de Croissance",
       },
     ],
+  },
+
+  // Twitter (X)
+  twitter: {
+    card: "summary_large_image",
+    title: "UPYB - Agence Digitale de Croissance",
+    description: "Nous ne sommes pas des simples développeurs. Nous sommes des accélérateurs. Découvrez notre approche 360°.",
+    images: ["/opengraph-image.png"], // On utilise la même image
+  },
+
+  // Icônes du navigateur
+  icons: {
+    icon: "/logo-upyb.png",
+    shortcut: "/logo-upyb.png",
+    apple: "/logo-upyb.png",
   },
 };
 
@@ -56,12 +66,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr"> 
+    <html lang="fr">
       <body
         className={`${montserrat.variable} ${hind.variable} font-sans antialiased bg-upyb-deep text-upyb-white`}
         suppressHydrationWarning={true}
       >
-        <SmoothScroll /> 
+        <SmoothScroll />
         <div className="noise-overlay"></div>
         {children}
       </body>
